@@ -1,0 +1,20 @@
+﻿@using URLCutter.DTO
+@model LoginDTO
+<head>
+    <link rel="stylesheet" href="~/css/account.css" />
+</head>
+
+<form asp-action="Login" class="form-signin text-center mt-3">
+    <h1 class="h3 font-weight-normal">Please log in</h1>
+    @if(ViewBag.Error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+    <input asp-for="Email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+    <input asp-for="Password" type="password" width="300" id="inputPassword" class="form-control" placeholder="Password" required>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+</form>

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using URLCutter.Models;
 
-namespace URLCutter.Controllers
+namespace ScratchWorld.Controllers
 {
     public class HomeController : Controller
     {
