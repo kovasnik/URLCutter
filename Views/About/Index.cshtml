@@ -1,0 +1,9 @@
+﻿<h2>About</h2>
+
+@if (User.IsInRole("Admin"))
+{
+    <form asp-action="Edit" method="post">
+        <textarea name="description"></textarea>
+        <button type="submit">Save</button>
+    </form>
+}

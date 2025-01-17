@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using URLCutter.BLL.Interfaces;
 using URLCutter.Data.Interfaces;
 using URLCutter.DTO;
+using URLCutter.Helper;
 using URLCutter.Models;
 
 namespace URLCutter.BLL.Services
@@ -16,16 +18,37 @@ namespace URLCutter.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task AddAsync(AddShortUrlDTO shortURL)
+        public async Task<ServiceResult<ShortUrlDTO>> AddAsync(AddShortUrlDTO shortURL)
         {
+            var existingUrl = _shortUrlRepository.GetByOriginalUrlAsync(shortURL.OriginalUrl);
+            if (existingUrl == null)
+            {
+                return new ServiceResult<ShortUrlDTO>
+                {
+                    Success = false,
+                    Message = "This URL already exists."
+                };
+            }
             var newUrl = _mapper.Map<ShortURL>(shortURL);
             await _shortUrlRepository.AddAsync(newUrl);
+
+            return new ServiceResult<ShortUrlDTO>
+            {
+                Success = true,
+                Data = _mapper.Map<ShortUrlDTO>(newUrl)
+            };
         }
 
-        public async Task DeleteAsync(ShortUrlDTO shortURL)
+        public async Task<bool> DeleteAsync(int urlId)
         {
-            var url = _mapper.Map<ShortURL>(shortURL);
+            var url = await _shortUrlRepository.GetByIdAsync(urlId);
+            if (url == null)
+            {
+                return false;
+            }
+
             await _shortUrlRepository.DeleteAsync(url);
+            return true;
         }
 
         public async Task<IEnumerable<ShortUrlDTO>> GetAllAsync()

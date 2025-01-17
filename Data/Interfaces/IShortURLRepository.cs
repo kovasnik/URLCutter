@@ -9,5 +9,6 @@ namespace URLCutter.Data.Interfaces
         Task DeleteAsync(ShortURL shortURL);
         Task<IEnumerable<ShortURL>> GetAllAsync();
         Task<ShortURL> GetByIdAsync(int id);
+        Task<ShortURL> GetByOriginalUrlAsync(string originalUrl);
     }
 }

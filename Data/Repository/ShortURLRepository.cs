@@ -34,6 +34,11 @@ namespace URLCutter.Data.Repository
 
         }
 
+        public async Task<ShortURL> GetByOriginalUrlAsync(string originalUrl)
+        {
+            return await _context.ShortURLs.FirstOrDefaultAsync(s => s.OriginalUrl == originalUrl);
+        }
+
         public async Task UpdateAsync(ShortURL shortURL)
         {
             _context.Update(shortURL);
